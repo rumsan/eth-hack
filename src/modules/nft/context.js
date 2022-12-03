@@ -35,23 +35,29 @@ export const NftContextProvider = ({ children }) => {
   };
 
   const buyNft = async (payload) => {
-    const { tokenId, price, previousOwner } = payload;
+    try {
+      const { tokenId, price, previousOwner } = payload;
 
-    const marketPlace = makeContract(
-      library,
-      marketPlaceAbi,
-      CONTRACT_ADDRESS.marketPlace[chainId]
-    );
-    const Price = Web3.utils.toWei(price);
-    let tx = await marketPlace.methods.buy(tokenId).send({ value: Price });
-    if (tx) {
-      let title = "Nft Bought ";
-      let body = `You have successfully bought the nft.`;
-      sendNotification(title, body, account);
+      const marketPlace = makeContract(
+        library,
+        marketPlaceAbi.abi,
+        CONTRACT_ADDRESS.marketPlace[chainId]
+      );
+      const Price = Web3.utils.toWei(price);
+      let tx = await marketPlace.methods
+        .buy(tokenId)
+        .send({ value: Price, from: account });
+      if (tx) {
+        let title = "Nft Bought ";
+        let body = `You have successfully bought the nft.`;
+        sendNotification(title, body, account);
 
-      title = "Nft Sold ";
-      body = `Your nft  have been  successfully sold.`;
-      sendNotification(title, body, previousOwner);
+        title = "Nft Sold ";
+        body = `Your nft  have been  successfully sold.`;
+        sendNotification(title, body, previousOwner);
+      }
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -63,7 +69,9 @@ export const NftContextProvider = ({ children }) => {
       marketPlaceAbi,
       CONTRACT_ADDRESS.marketPlace[chainId]
     );
-    let tx = await marketPlace.methods.secondarySell(tokenId, price);
+    let tx = await marketPlace.methods
+      .secondarySell(tokenId, price)
+      .send({ from: account });
     if (tx) {
       const title = "Nft listed ";
       const body = `Your nft is listed for sale.`;

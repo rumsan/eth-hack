@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { NftContext } from "../../../modules/nft/context";
 
 import "./nft-card.css";
 
@@ -9,11 +10,15 @@ import MyToolTip from "../../Atoms/Tooltip";
 
 const NftCard = (props) => {
   const { isPreview } = props;
-  const { title, id, price, imgUrl, creator, symbol } = props?.item;
+  const { title, id, price, imgUrl, creator, symbol, previousOwner, chainId } =
+    props?.item;
+  const navigate = useNavigate();
 
   const [copied, setCopied] = useState(false);
 
-  const handleAddToCart = () => {};
+  const handleBuy = async () => {
+    navigate(`/nft-detail/${id}/chain-id/${chainId}`);
+  };
 
   const handleCopyToClipboard = (e) => {
     e.preventDefault();
@@ -34,7 +39,7 @@ const NftCard = (props) => {
   return (
     <div className="single__nft__card">
       <div className="nft__img">
-        <Link to={`/nft-detail/${id}`}>
+        <Link to={`/nft-detail/${id}/chain-id/${chainId}`}>
           <img
             src={imgUrl}
             alt=""
@@ -83,14 +88,13 @@ const NftCard = (props) => {
         </div>
 
         <div className=" mt-3 d-flex align-items-center justify-content-between">
-          <Link to={isPreview ? "" : `/nft-detail/${id}`}>
-            <button
-              disabled={isPreview === true}
-              className="bid__btn d-flex align-items-center gap-1"
-            >
-              <i className="ri-shopping-cart-line"></i> Buy Now
-            </button>
-          </Link>
+          <button
+            disabled={isPreview === true}
+            className="bid__btn d-flex align-items-center gap-1"
+            onClick={handleBuy}
+          >
+            <i className="ri-shopping-cart-line"></i> Buy
+          </button>
         </div>
       </div>
     </div>
