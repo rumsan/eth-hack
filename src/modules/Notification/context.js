@@ -18,6 +18,7 @@ export const NotificationContextProvider = ({ children }) => {
       const apiResponse = await PushAPI.payloads.sendNotification({
         signer,
         type: 3, //targeted
+        identityType: 2,
         notification: {
           title: `${title}`,
           body: `${body}`,
@@ -61,11 +62,25 @@ export const NotificationContextProvider = ({ children }) => {
     }
   };
 
+  const getNotifications = async () => {
+    try {
+      const notifications = await PushAPI.user.getFeeds({
+        user: "eip155:5:0x3e63Fc89c0DE2Fc4ae6a6cD3ea2634947204919D", // user address in CAIP
+        spam: true,
+        env: "staging",
+      });
+      console.log({ notifications });
+      return notifications;
+    } catch (e) {
+      console.log(e);
+    }
+  };
   return (
     <NotificationContext.Provider
       value={{
         sendNotification,
         optinChannel,
+        getNotifications,
       }}
     >
       {children}
