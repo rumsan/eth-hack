@@ -83,16 +83,14 @@ const NftCard = (props) => {
         </div>
 
         <div className=" mt-3 d-flex align-items-center justify-content-between">
-          <button
-            disabled={isPreview === true}
-            className="bid__btn d-flex align-items-center gap-1"
-            onClick={handleAddToCart}
-          >
-            <i className="ri-shopping-cart-line"></i> Add to cart
-          </button>
-          <span className="history__link">
-            <Link to={`${isPreview ? "#" : "#"}`}>View History</Link>
-          </span>
+          <Link to={isPreview ? "" : `/nft-detail/${id}`}>
+            <button
+              disabled={isPreview === true}
+              className="bid__btn d-flex align-items-center gap-1"
+            >
+              <i className="ri-shopping-cart-line"></i> Buy Now
+            </button>
+          </Link>
         </div>
       </div>
     </div>

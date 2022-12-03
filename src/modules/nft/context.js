@@ -23,7 +23,6 @@ export const NftContextProvider = ({ children }) => {
       marketPlaceAbi.abi,
       CONTRACT_ADDRESS.marketPlace[chainId]
     );
-    console.log(marketPlace);
     const Price = Web3.utils.toWei(price);
     let tx = await marketPlace.methods
       .mintAndSell(Price, tokenUri)

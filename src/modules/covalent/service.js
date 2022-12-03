@@ -7,10 +7,13 @@ import marketPlaceAbi from "../../contract/abi/MarketPlace.json";
 import { getContract } from "../../utils/web3";
 import Web3 from "web3";
 
-export function fetchNftTokenIds(params) {
+export async function fetchNftTokenIds(params) {
   const { chainId, contract } = params;
-
-  const marketPlace = getContract(marketPlaceAbi.abi,CONTRACT_ADDRESS.marketPlace[chainId],chainId);
+  const marketPlace = getContract(
+    marketPlaceAbi.abi,
+    CONTRACT_ADDRESS.marketPlace[chainId],
+    chainId
+  );
 
   const url = `${API.COVALENT}/${chainId}/tokens/${contract}/nft_token_ids`;
   const appendedUrl = appendQueryParam(url);
@@ -34,7 +37,7 @@ export function fetchNftTokenIds(params) {
             const price = Web3.utils.fromWei(data.minPrice);
             const previousOwner = data.nftOwner;
             const metadata = metadataInfo.data.items[0].nft_data[0];
-            return { ...d, ...metadata,price,previousOwner };
+            return { ...d, ...metadata, price, previousOwner };
           })
         );
         const ipfsResponse = await Promise.all(
