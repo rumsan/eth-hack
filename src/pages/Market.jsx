@@ -1,47 +1,67 @@
-import React, { useState } from "react";
+import React, { useState,useContext,useEffect} from "react";
 
 import CommonSection from "../components/ui/Common-section/CommonSection";
+import API from "../constants/api";
+import { SYMBOLS } from "../constants";
 
+
+import { CovalentContext } from "../modules/covalent/context";
 import NftCard from "../components/ui/Nft-card/NftCard";
+import ContentLoader from '../components/Atoms/ContentLoader'
 
-import { NFT__DATA } from "../assets/data/data";
 
 import { Container, Row, Col } from "reactstrap";
 
 import "../styles/market.css";
 
 const Market = () => {
-  const [data, setData] = useState(NFT__DATA);
-
   const handleCategory = () => {};
-
   const handleItems = () => {};
+  const [isFetched, setIsFetched] = useState(false);
+  const [list, setList] = useState([]);
+  const [loading,setLoading]=useState(false);
+  const { fetchNftTokenIds } = useContext(CovalentContext);
+  const formatNftInfo = (nfts) => {
+    if (!nfts?.length) return;
+    const formatted = nfts?.map((d) => {
+      return {
+        id: d.token_id,
+        title: d.tokenData.name,
+        desc: d.tokenData.description,
+        imgUrl: `${API.IPFS}/${d.tokenData.image}`,
+        creator: d.owner,
+        creatorImg:"../../../assets/images/ava-01.png",
+        price: d.tokenData.price,
+        symbol: SYMBOLS[`${d.tokenData.network}`],
+      };
+    });
+    return formatted;
+  };
+
+  useEffect(() => {
+    async function fetchNftList() {
+      try {
+        setLoading(true);
+        if (isFetched) return;
+        const tokenIds = await fetchNftTokenIds({
+          chainId: 97,
+          contract: "0xf035aa818ee4fd5b15dadbb1c8b66109b6ddf993",
+        });
+        setIsFetched(true);
+        const res = formatNftInfo(tokenIds);
+        setList(res);
+        setLoading(false)
+      } catch (error) {
+        setLoading(false)
+      }
+   
+    }
+    fetchNftList();
+  }, [isFetched, fetchNftTokenIds]);
 
   // ====== SORTING DATA BY HIGH, MID, LOW RATE =========
   const handleSort = (e) => {
-    const filterValue = e.target.value;
 
-    if (filterValue === "high") {
-      const filterData = NFT__DATA.filter((item) => item.currentBid >= 6);
-
-      setData(filterData);
-    }
-
-    if (filterValue === "mid") {
-      const filterData = NFT__DATA.filter(
-        (item) => item.currentBid >= 5.5 && item.currentBid < 6
-      );
-
-      setData(filterData);
-    }
-
-    if (filterValue === "low") {
-      const filterData = NFT__DATA.filter(
-        (item) => item.currentBid >= 4.89 && item.currentBid < 5.5
-      );
-
-      setData(filterData);
-    }
   };
 
   return (
@@ -84,12 +104,14 @@ const Market = () => {
                 </div>
               </div>
             </Col>
-
-            {data?.map((item) => (
-              <Col lg="3" md="4" sm="6" className="mb-4" key={item.id}>
-                <NftCard item={item} />
-              </Col>
-            ))}
+{
+  loading?<ContentLoader/>:<>  {list?.map((item) => (
+    <Col lg="3" md="4" sm="6" className="mb-4" key={item.id}>
+      <NftCard item={item} />
+    </Col>
+  ))}</>
+}
+          
           </Row>
         </Container>
       </section>

@@ -57,3 +57,9 @@ footer {
   border-radius: 2em;
   background: linear-gradient(-45deg, #e250e5, #4b50e6, #e250e5, #4b50e6);
 }
+
+#wallet-dropdown{
+  background-color: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+}
