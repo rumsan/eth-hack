@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState, useCallback } from "react";
 import { Container, Row, Col, Input } from "reactstrap";
 import API from "../../../constants/api";
+import { useWeb3React } from "@web3-react/core";
 
 import "./trending.css";
 import NftCard from "../Nft-card/NftCard";
@@ -11,6 +12,7 @@ import ContentLoader from "../../Atoms/ContentLoader";
 import { CONTRACT_ADDRESS } from "../../../contract/contractAddress";
 
 const Trending = () => {
+  const {library} = useWeb3React();
   const [list, setList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [network, setNetwork] = useState(97);
@@ -38,6 +40,7 @@ const Trending = () => {
       const tokenIds = await fetchNftTokenIds({
         chainId: Number(network),
         contract: CONTRACT_ADDRESS.nft[network],
+        library
       });
       if (!tokenIds?.length) {
         setList([]);
