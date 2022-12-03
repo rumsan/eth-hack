@@ -11,7 +11,6 @@ const NotificationContext = createContext(null);
 
 export const NotificationContextProvider=({children})=>{
     const { account, library, chainId } = useWeb3React();
-    const messageSigner = library?.getSigner(account);
 
     const PK ='e86220869dca89d0330d0596751d3390dc589b57e22a95ac23510b8570bc8785';
     const Pkey = `0x${PK}`;
