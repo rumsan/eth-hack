@@ -50,6 +50,7 @@ const Market = () => {
     fetchNftList();
   }, [isFetched, fetchNftTokenIds]);
 
+  console.log(list)
   // ====== SORTING DATA BY HIGH, MID, LOW RATE =========
   const handleSort = (e) => {
 

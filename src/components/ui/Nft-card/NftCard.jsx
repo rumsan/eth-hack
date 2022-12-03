@@ -3,27 +3,31 @@ import { Link } from "react-router-dom";
 
 import "./nft-card.css";
 
-import defaultImg from '../../../assets/images/ava-04.png'
-import coverImage from '../../../assets/images/img-01.jpg'
+import defaultImg from "../../../assets/images/ava-04.png";
+import coverImage from "../../../assets/images/img-01.jpg";
 
 const NftCard = (props) => {
   const { title, id, price, imgUrl, creator, symbol } = props.item;
-
-const handleAddToCart=()=>{
-    
-}
+  const handleAddToCart = () => {};
   return (
     <div className="single__nft__card">
       <div className="nft__img">
-        <img src={imgUrl} alt="" onError={({ currentTarget }) => {
-    currentTarget.onerror = null;
-    currentTarget.src=coverImage;
-  }} className="w-100" />
+        <Link to={`/nft-detail/${id}`}>
+          <img
+            src={imgUrl}
+            alt=""
+            onError={({ currentTarget }) => {
+              currentTarget.onerror = null;
+              currentTarget.src = coverImage;
+            }}
+            className="w-100"
+          />
+        </Link>
       </div>
 
       <div className="nft__content">
         <h5 className="nft__title">
-          <Link to={`/market/${id}`}>{title}</Link>
+          <Link to={`/nft-detail/${id}`}>{title}</Link>
         </h5>
 
         <div className="creator__info-wrapper d-flex gap-3">
@@ -34,7 +38,11 @@ const handleAddToCart=()=>{
           <div className="creator__info w-100 d-flex align-items-center justify-content-between">
             <div>
               <h6>Created By</h6>
-              <p>{creator.substring(0,4)+'...'+creator.substring(creator.length,creator.length-4)}</p>
+              <p>
+                {creator.substring(0, 4) +
+                  "..." +
+                  creator.substring(creator.length, creator.length - 4)}
+              </p>
             </div>
 
             <div>
