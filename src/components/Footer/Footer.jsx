@@ -40,24 +40,7 @@ const RESOURCES = [
   },
 ];
 
-const COMPANY = [
-  {
-    display: "About",
-    url: "#",
-  },
-  {
-    display: "Career",
-    url: "#",
-  },
-  {
-    display: "Ranking",
-    url: "#",
-  },
-  {
-    display: "Contact Us",
-    url: "/contact",
-  },
-];
+
 
 const Footer = () => {
   return (

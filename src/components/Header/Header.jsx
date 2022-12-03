@@ -67,7 +67,7 @@ const Header = () => {
               <span>
                 <i className="ri-fire-fill"></i>
               </span>
-              Ease NFTs
+             <Link to="/" style={{textDecoration:'none'}}> Ease NFTs</Link>
             </h2>
           </div>
 
