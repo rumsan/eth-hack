@@ -73,12 +73,10 @@ const Footer = () => {
                 <span>
                   <i className="ri-fire-fill"></i>
                 </span>
-                NFTs
+                Ease NFTs
               </h2>
               <p>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Voluptate, quod repellat! Quis quos dolorum tenetur fuga?
-                Aspernatur rerum quae amet.
+               Ease NFTs, a marketplace where you can <strong>create, buy & sell</strong> NFTs with ease.
               </p>
             </div>
           </Col>

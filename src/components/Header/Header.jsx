@@ -29,6 +29,7 @@ const Header = () => {
   const menuRef = useRef(null);
 
   const { account } = useWeb3React();
+  
 
   const { connectMetaMask,disconnect} =
     useContext(AppContext);
@@ -36,7 +37,7 @@ const Header = () => {
 
   const handleConnectWallet = useCallback(async (status) => {
     connectMetaMask();
-  }, []);
+  }, [connectMetaMask]);
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
@@ -66,7 +67,7 @@ const Header = () => {
               <span>
                 <i className="ri-fire-fill"></i>
               </span>
-              NFTs
+              Ease NFTs
             </h2>
           </div>
 

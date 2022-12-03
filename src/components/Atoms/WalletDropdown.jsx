@@ -6,7 +6,6 @@ import {
   DropdownItem,
 } from 'reactstrap';
 import PropTypes from 'prop-types';
-import {Link} from 'react-router-dom'
 
 function Example({ direction,onClickLogout, ...args }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);

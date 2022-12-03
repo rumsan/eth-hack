@@ -1,25 +1,30 @@
 import React, {
     createContext,
+    useReducer
   } from "react";
 
   import { useAuth } from "../../hooks/useWalletAuth";
+  import appReduce from "./reducer";
 
-  const initialState = {
-  };
+
+  const initialState={}
+
+  export const AppContext = createContext();
   
-  export const AppContext = createContext(initialState);
   export const AppContextProvider = ({ children }) => {
     const {
       connectMetaMask,
       disconnect,
     } = useAuth();
 
+    const [state] = useReducer(appReduce, initialState);
+
     return (
       <AppContext.Provider
         value={{
-          initialState: initialState,
           connectMetaMask,
-          disconnect
+          disconnect,
+          ...state
         }}
       >
         {children}

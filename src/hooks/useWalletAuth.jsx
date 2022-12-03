@@ -41,7 +41,6 @@ import {
           });
           return false;
         }
-        const selectedAddress = window.ethereum.selectedAddress || '';
   
         await activate(injected);
         localStorage.setItem("wallet-auth", "MetaMask");

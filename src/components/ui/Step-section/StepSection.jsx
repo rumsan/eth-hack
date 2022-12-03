@@ -18,7 +18,7 @@ const STEP__DATA = [
   },
 
   {
-    title: "Add your NFTs",
+    title: "Add your Ease NFTs",
     desc: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit eligendi, facilis voluptatum fugit illum ",
     icon: "ri-image-line",
   },
@@ -36,7 +36,7 @@ const StepSection = () => {
       <Container>
         <Row>
           <Col lg="12" className="mb-4">
-            <h3 className="step__title">Create and sell your NFTs</h3>
+            <h3 className="step__title">Create and sell your Ease NFTs</h3>
           </Col>
 
           {STEP__DATA.map((item, index) => (
