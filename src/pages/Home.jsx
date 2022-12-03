@@ -6,7 +6,8 @@ import Trending from "../components/ui/Trending-section/Trending";
 const Home = () => {
   return (
     <>
-      <HeroSection /> 
+      <HeroSection />
+      <StepSection />
       <Trending />
     </>
   );

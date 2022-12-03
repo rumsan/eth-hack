@@ -1,6 +1,6 @@
 import React, { createContext, useReducer } from "react";
 import reducer from "./reducer";
-import Service from "./service";
+import * as Service from "./service";
 
 const initialState = {};
 
