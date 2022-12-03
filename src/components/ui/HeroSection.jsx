@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import "./hero-section.css";
 
 import heroImg from "../../assets/images/hero.jpg";
+import defaultImage from '../../assets/images/img-01.jpg'
 
 const HeroSection = () => {
   return (
@@ -33,8 +34,11 @@ const HeroSection = () => {
 
           <Col lg="6" md="6">
             <div className="hero__img">
-              <img src={heroImg} alt="" className="w-100" />
-            </div>
+              <img src={heroImg} alt="" onError={({ currentTarget }) => {
+    currentTarget.onerror = null;
+    currentTarget.src=defaultImage;
+  }} className="w-100" />
+            </div>  
           </Col>
         </Row>
       </Container>
