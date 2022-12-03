@@ -1,17 +1,17 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
 import "./nft-card.css";
 
-import Modal from "../Modal/Modal";
 import defaultImg from '../../../assets/images/ava-04.png'
 import coverImage from '../../../assets/images/img-01.jpg'
 
 const NftCard = (props) => {
   const { title, id, price, creatorImg, imgUrl, creator, symbol } = props.item;
 
-  const [showModal, setShowModal] = useState(false);
-
+const handleAddToCart=()=>{
+    
+}
   return (
     <div className="single__nft__card">
       <div className="nft__img">
@@ -49,13 +49,10 @@ const NftCard = (props) => {
         <div className=" mt-3 d-flex align-items-center justify-content-between">
           <button
             className="bid__btn d-flex align-items-center gap-1"
-            onClick={() => setShowModal(true)}
+            onClick={handleAddToCart}
           >
             <i class="ri-shopping-cart-line"></i> Add to cart
           </button>
-
-          {showModal && <Modal setShowModal={setShowModal} />}
-
           <span className="history__link">
             <Link to="#">View History</Link>
           </span>
