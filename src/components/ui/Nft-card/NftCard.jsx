@@ -1,14 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 import "./nft-card.css";
 
 import defaultImg from "../../../assets/images/ava-04.png";
 import coverImage from "../../../assets/images/img-01.jpg";
+import MyToolTip from "../../Atoms/Tooltip";
 
 const NftCard = (props) => {
   const { isPreview } = props;
   const { title, id, price, imgUrl, creator, symbol } = props?.item;
+
+  const [copied, setCopied] = useState(false);
+
+  const handleAddToCart = () => {};
+
+  const handleCopyToClipboard = (e) => {
+    e.preventDefault();
+    const copy_address = creator;
+    navigator.clipboard.writeText(copy_address).then(
+      function () {
+        setCopied(true);
+      },
+      function (err) {
+        console.error("ERR:", err);
+      },
+      setInterval(() => {
+        setCopied(false);
+      }, 1000)
+    );
+  };
+
   return (
     <div className="single__nft__card">
       <div className="nft__img">
@@ -38,11 +60,17 @@ const NftCard = (props) => {
           <div className="creator__info w-100 d-flex align-items-center justify-content-between">
             <div>
               <h6>Created By</h6>
-              <p>
+              <Link
+                id="test"
+                onClick={handleCopyToClipboard}
+                className="text-white"
+                style={{ textDecoration: "none" }}
+              >
                 {creator.substring(0, 4) +
                   "..." +
                   creator.substring(creator.length, creator.length - 4)}
-              </p>
+              </Link>
+              <MyToolTip text={"copy"} id="test" />
             </div>
 
             <div>
@@ -55,14 +83,16 @@ const NftCard = (props) => {
         </div>
 
         <div className=" mt-3 d-flex align-items-center justify-content-between">
-          <Link to={`/nft-detail/${id}`}>
-            <button
-              disabled={isPreview === true}
-              className="bid__btn d-flex align-items-center gap-1"
-            >
-              <i className="ri-shopping-cart-line"></i>Buy Now
-            </button>
-          </Link>
+          <button
+            disabled={isPreview === true}
+            className="bid__btn d-flex align-items-center gap-1"
+            onClick={handleAddToCart}
+          >
+            <i className="ri-shopping-cart-line"></i> Add to cart
+          </button>
+          <span className="history__link">
+            <Link to={`${isPreview ? "#" : "#"}`}>View History</Link>
+          </span>
         </div>
       </div>
     </div>
