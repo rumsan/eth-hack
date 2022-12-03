@@ -4,7 +4,6 @@ import API from "../../../constants/api";
 
 import { NFT__DATA } from "../../../assets/data/data";
 import "./trending.css";
-
 import NftCard from "../Nft-card/NftCard";
 import { CovalentContext } from "../../../modules/covalent/context";
 import { SYMBOLS } from "../../../constants";
@@ -22,7 +21,7 @@ const Trending = () => {
         desc: d.tokenData.description,
         imgUrl: `${API.IPFS}/${d.tokenData.image}`,
         creator: d.owner,
-        creatorImg: "../images/ava-01.png",
+        creatorImg:"../../../assets/images/ava-01.png",
         price: d.tokenData.price,
         symbol: SYMBOLS[`${d.tokenData.network}`],
       };
@@ -37,7 +36,6 @@ const Trending = () => {
         chainId: 97,
         contract: "0xf035aa818ee4fd5b15dadbb1c8b66109b6ddf993",
       });
-      console.log(tokenIds);
       setIsFetched(true);
       const res = formatNftInfo(tokenIds);
       setList(res);
@@ -45,7 +43,6 @@ const Trending = () => {
     fetchNftList();
   }, [isFetched, fetchNftTokenIds]);
 
-  console.log(list);
   return (
     <section>
       <Container>

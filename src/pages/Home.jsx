@@ -7,7 +7,6 @@ const Home = () => {
   return (
     <>
       <HeroSection />
-      <StepSection />
       <Trending />
     </>
   );
