@@ -25,11 +25,10 @@ module.exports = {
       BINANCE: 97,
     },
   },
-  CHAIN_RPC_URLS:{
-    80001:"https://polygon-mumbai.g.alchemy.com/v2/QgYOFbUUBWIKOCTtKpB4wSYMiZovErfI",
-    97:"https://data-seed-prebsc-1-s1.binance.org:8545"
-  
-
+  CHAIN_RPC_URLS: {
+    80001:
+      "https://polygon-mumbai.g.alchemy.com/v2/QgYOFbUUBWIKOCTtKpB4wSYMiZovErfI",
+    97: "https://data-seed-prebsc-1-s3.binance.org:8545",
   },
   EXPLORERS: {
     1: "https://etherscan.io",
@@ -82,7 +81,7 @@ module.exports = {
           symbol: "bnb",
           decimals: 18,
         },
-        rpcUrls: ["https://data-seed-prebsc-1-s1.binance.org:8545/"],
+        rpcUrls: ["https://data-seed-prebsc-1-s3.binance.org:8545/"],
         blockExplorerUrls: ["https://testnet.bscscan.com"],
         iconUrls: ["https://bscscan.com/images/svg/brands/bnb.svg?v=1.3"],
       },
