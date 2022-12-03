@@ -88,16 +88,16 @@ const Footer = () => {
             <h5>Contact Us</h5>
             <ListGroup className="list__group">
                 <ListGroupItem  className="list__item">
-                  <span style={{color:'white'}}><i class="ri-home-4-fill"></i> 24 Parkview Road Randolph,
+                  <span style={{color:'white'}}><i className="ri-home-4-fill"></i> 24 Parkview Road Randolph,
 NJ 07869 USA</span>
                 </ListGroupItem>
                 <ListGroupItem  className="list__item">
-                  <span style={{color:'white'}}><i class="ri-phone-line"></i>  +1 212 729 5703
+                  <span style={{color:'white'}}><i className="ri-phone-line"></i>  +1 212 729 5703
 
 </span>
                 </ListGroupItem>
                 <ListGroupItem  className="list__item">
-                  <a style={{color:'white'}} href="mailto:team@rumsan.com" ><i class="ri-mail-line"></i> team@rumsan.com</a>
+                  <a style={{color:'white'}} href="mailto:team@rumsan.com" ><i className="ri-mail-line"></i> team@rumsan.com</a>
                 </ListGroupItem>
             </ListGroup>
           </Col>
