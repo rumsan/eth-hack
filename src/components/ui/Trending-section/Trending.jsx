@@ -25,8 +25,10 @@ const Trending = () => {
         imgUrl: `${API.IPFS}/${d.tokenData.image}`,
         creator: d.owner,
         creatorImg: "../../../assets/images/ava-01.png",
-        price: d.tokenData.price,
+        price: d.price,
         symbol: SYMBOLS[`${d.tokenData.network}`],
+        previousOwner:d.previousOwner,
+        chainId:network
       };
     });
     return formatted;

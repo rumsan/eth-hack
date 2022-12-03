@@ -18,7 +18,7 @@ const Routers = () => {
       <Route path="/market" element={<Market />} />
       <Route path="/create" element={<Create />} />
       <Route path="/my-collections" element={<MyCollection />} />
-      <Route path="/nft-detail/:id" element={<NftDetails />} />
+      <Route path="/nft-detail/:id/chain-id/:chainId" element={<NftDetails />} />
       <Route path="/*" element={<ErrorPage />} />
     </Routes>
   );
