@@ -1,12 +1,12 @@
-import React, { useRef, useEffect,useContext,useCallback } from "react";
+import React, { useRef, useEffect, useContext, useCallback } from "react";
 import "./header.css";
 import { Container } from "reactstrap";
 
 import { NavLink, Link } from "react-router-dom";
 
-import { useWeb3React } from '@web3-react/core';
+import { useWeb3React } from "@web3-react/core";
 import { AppContext } from "../../modules/app/context";
-import WalletDropDown from '../Atoms/WalletDropdown'
+import WalletDropDown from "../Atoms/WalletDropdown";
 
 const NAV__LINKS = [
   {
@@ -21,6 +21,7 @@ const NAV__LINKS = [
     display: "Create",
     url: "/create",
   },
+  { display: "My Collections", url: "/my-collections" },
 ];
 
 const Header = () => {
@@ -29,15 +30,15 @@ const Header = () => {
   const menuRef = useRef(null);
 
   const { account } = useWeb3React();
-  
 
-  const { connectMetaMask,disconnect} =
-    useContext(AppContext);
-    
+  const { connectMetaMask, disconnect } = useContext(AppContext);
 
-  const handleConnectWallet = useCallback(async (status) => {
-    connectMetaMask();
-  }, [connectMetaMask]);
+  const handleConnectWallet = useCallback(
+    async (status) => {
+      connectMetaMask();
+    },
+    [connectMetaMask]
+  );
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
@@ -67,7 +68,10 @@ const Header = () => {
               <span>
                 <i className="ri-fire-fill"></i>
               </span>
-             <Link to="/" style={{textDecoration:'none'}}> Ease NFTs</Link>
+              <Link to="/" style={{ textDecoration: "none" }}>
+                {" "}
+                Ease NFTs
+              </Link>
             </h2>
           </div>
 
@@ -81,7 +85,7 @@ const Header = () => {
                       navClass.isActive ? "active" : ""
                     }
                   >
-                    {item.display}
+                    {!account && index===3?null:item.display}
                   </NavLink>
                 </li>
               ))}
@@ -93,9 +97,15 @@ const Header = () => {
               <span>
                 <i className="ri-wallet-line"></i>
               </span>
-              <Link onClick={handleConnectWallet}>{account?account:'Connect Wallet'}</Link>
-              {account  && <WalletDropDown onClickLogout={()=>disconnect()} direction="down"/>
-}
+              <Link onClick={handleConnectWallet}>
+                {account ? account : "Connect Wallet"}
+              </Link>
+              {account && (
+                <WalletDropDown
+                  onClickLogout={() => disconnect()}
+                  direction="down"
+                />
+              )}
             </button>
             <span className="mobile__menu">
               <i className="ri-menu-line" onClick={toggleMenu}></i>
