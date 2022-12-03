@@ -5,17 +5,19 @@ import ContentLoader from 'react-content-loader'
 
 const ImageGrid = props => (
   <ContentLoader
-    width={800}
+    width={1600}
     height={575}
-    viewBox="0 0 800 575"
+    viewBox="0 0 1600 575"
     backgroundColor="#f3f3f3"
     foregroundColor="#ecebeb"
     {...props}
   >
     
-    <rect x="12" y="58" rx="2" ry="2" width="211" height="211" />
-    <rect x="240" y="57" rx="2" ry="2" width="211" height="211" />
-    <rect x="467" y="56" rx="2" ry="2" width="211" height="211" />
+    <rect x="0" y="0" rx="0" ry="0" width="306" height="409" />
+    <rect x="350" y="0" rx="2" ry="2" width="306" height="409" />
+    <rect x="700" y="0" rx="2" ry="2" width="306" height="409" />
+    <rect x="1050" y="0" rx="2" ry="2" width="306" height="409" />
+
   </ContentLoader>
 )
 
