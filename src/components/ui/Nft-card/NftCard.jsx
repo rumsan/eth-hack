@@ -51,7 +51,7 @@ const NftCard = (props) => {
             className="bid__btn d-flex align-items-center gap-1"
             onClick={() => setShowModal(true)}
           >
-            <i className="ri-shopping-bag-line"></i> Buy Now
+            <i class="ri-shopping-cart-line"></i> Add to cart
           </button>
 
           {showModal && <Modal setShowModal={setShowModal} />}
