@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import { Link } from "react-router-dom";
 
 import "./nft-card.css";
@@ -9,7 +9,28 @@ import coverImage from "../../../assets/images/img-01.jpg";
 const NftCard = (props) => {
   const { isPreview } = props;
   const { title, id, price, imgUrl, creator, symbol } = props?.item;
+
+  const {copied,setCopied}=useState(false);
+
   const handleAddToCart = () => {};
+
+  const handleCopyToClipboard = (e) => {
+    e.preventDefault();
+    const copy_address = creator;
+    navigator.clipboard.writeText(copy_address).then(
+      function () {
+        setCopied(true);
+      },
+      function (err) {
+        console.error("ERR:", err);
+      },
+      setInterval(() => {
+        setCopied(false);
+      }, 1000)
+    );
+  };
+
+
   return (
     <div className="single__nft__card">
       <div className="nft__img">
@@ -39,11 +60,11 @@ const NftCard = (props) => {
           <div className="creator__info w-100 d-flex align-items-center justify-content-between">
             <div>
               <h6>Created By</h6>
-              <p>
+              <Link onClick={handleCopyToClipboard} className="text-white" style={{textDecoration:'none'}}>
                 {creator.substring(0, 4) +
                   "..." +
                   creator.substring(creator.length, creator.length - 4)}
-              </p>
+              </Link>
             </div>
 
             <div>
