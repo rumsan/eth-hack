@@ -12,6 +12,10 @@ export function fetchNftTokenIds(params) {
       .get(appendedUrl)
       .then(async (res) => {
         const { data } = res.data;
+        if (!data?.items?.length) {
+          resolve([]);
+          return;
+        }
         const metaDataResponse = await Promise.all(
           data.items?.map(async (d) => {
             const metadataInfo = await fetchNftMetadata({
