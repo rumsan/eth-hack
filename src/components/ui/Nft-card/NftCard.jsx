@@ -6,7 +6,7 @@ import "./nft-card.css";
 import Modal from "../Modal/Modal";
 
 const NftCard = (props) => {
-  const { title, id, currentBid, creatorImg, imgUrl, creator } = props.item;
+  const { title, id, price, creatorImg, imgUrl, creator, symbol } = props.item;
 
   const [showModal, setShowModal] = useState(false);
 
@@ -33,8 +33,10 @@ const NftCard = (props) => {
             </div>
 
             <div>
-              <h6>Current Bid</h6>
-              <p>{currentBid} ETH</p>
+              <h6>Price</h6>
+              <p>
+                {price} {symbol}
+              </p>
             </div>
           </div>
         </div>
