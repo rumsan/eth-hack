@@ -1,5 +1,3 @@
-
-export const makeContract=(library,abi,address)=>{
-    return new library.eth.Contract(abi,address);
-}
-
+export const makeContract = (library, abi, address) => {
+  return new library.eth.Contract(abi, address);
+};

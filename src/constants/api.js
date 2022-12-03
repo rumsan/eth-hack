@@ -5,5 +5,5 @@ const pinata = process.env.REACT_APP_PINATA_GATEWAY;
 module.exports = {
   COVALENT: covalent,
   IPFS: ipfs,
-  IPFS_PINATA:pinata
+  IPFS_PINATA: pinata,
 };

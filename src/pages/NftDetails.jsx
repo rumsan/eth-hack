@@ -1,4 +1,4 @@
-import React,{useContext,useState,useEffect} from "react";
+import React, { useContext, useState, useEffect } from "react";
 
 import CommonSection from "../components/ui/Common-section/CommonSection";
 import { useParams } from "react-router-dom";
@@ -17,8 +17,7 @@ const NftDetails = () => {
   const { id } = useParams();
   const { fetchNftMetadata } = useContext(CovalentContext);
   const [isFetched, setIsFetched] = useState(false);
-  const [detail,setDetail]=useState(null);
- 
+  const [detail, setDetail] = useState(null);
 
   useEffect(() => {
     async function fetchNftDetail() {
@@ -26,19 +25,18 @@ const NftDetails = () => {
       const nft = await fetchNftMetadata({
         chainId: 97,
         contract: "0xf035aa818ee4fd5b15dadbb1c8b66109b6ddf993",
-        tokenId:id
+        tokenId: id,
       });
-          const ipfsInfo = await fetchTokenUri(nft.data.items[0].nft_data[0].external_data.external_url);
-          const nftData=nft.data.items[0]
-          setDetail({...nftData,...ipfsInfo});
-          setIsFetched(true)
+      const ipfsInfo = await fetchTokenUri(
+        nft.data.items[0].nft_data[0].external_data.external_url
+      );
+      const nftData = nft.data.items[0];
+      setDetail({ ...nftData, ...ipfsInfo });
+      setIsFetched(true);
     }
     fetchNftDetail();
-  }, [fetchNftMetadata,isFetched,id]);
+  }, [fetchNftMetadata, isFetched, id]);
 
-
-
-console.log(detail)
   return (
     <>
       <CommonSection title={detail?.name} />
@@ -91,7 +89,7 @@ console.log(detail)
 
                 <p className="my-4">{detail?.description}</p>
                 <button className="singleNft-btn d-flex align-items-center gap-2 w-100">
-                <i className="ri-shopping-cart-line"></i>
+                  <i className="ri-shopping-cart-line"></i>
                   <Link to="/wallet">Add to cart</Link>
                 </button>
               </div>
@@ -99,7 +97,6 @@ console.log(detail)
           </Row>
         </Container>
       </section>
-
     </>
   );
 };
