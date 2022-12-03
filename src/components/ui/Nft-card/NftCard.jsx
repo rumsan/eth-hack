@@ -5,12 +5,13 @@ import "./nft-card.css";
 
 import defaultImg from "../../../assets/images/ava-04.png";
 import coverImage from "../../../assets/images/img-01.jpg";
+import MyToolTip from "../../Atoms/Tooltip"
 
 const NftCard = (props) => {
   const { isPreview } = props;
   const { title, id, price, imgUrl, creator, symbol } = props?.item;
 
-  const {copied,setCopied}=useState(false);
+  const [copied, setCopied] = useState(false);
 
   const handleAddToCart = () => {};
 
@@ -60,11 +61,12 @@ const NftCard = (props) => {
           <div className="creator__info w-100 d-flex align-items-center justify-content-between">
             <div>
               <h6>Created By</h6>
-              <Link onClick={handleCopyToClipboard} className="text-white" style={{textDecoration:'none'}}>
+              <Link id="test" onClick={handleCopyToClipboard} className="text-white" style={{textDecoration:'none'}}> 
                 {creator.substring(0, 4) +
                   "..." +
                   creator.substring(creator.length, creator.length - 4)}
               </Link>
+              <MyToolTip text={"copy"} id="test" />
             </div>
 
             <div>
