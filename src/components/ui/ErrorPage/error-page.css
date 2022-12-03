@@ -1,0 +1,13 @@
+.error__section {
+    background-color: white;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    padding-top: 120px;
+    padding-bottom: 120px;
+  }
+  
+  .error__section h2 {
+    color: #000;
+  }
+  

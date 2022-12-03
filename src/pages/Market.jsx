@@ -7,6 +7,7 @@ import { SYMBOLS } from "../constants";
 
 import { CovalentContext } from "../modules/covalent/context";
 import NftCard from "../components/ui/Nft-card/NftCard";
+import ContentLoader from '../components/Atoms/ContentLoader'
 
 
 import { Container, Row, Col } from "reactstrap";
@@ -18,6 +19,7 @@ const Market = () => {
   const handleItems = () => {};
   const [isFetched, setIsFetched] = useState(false);
   const [list, setList] = useState([]);
+  const [loading,setLoading]=useState(false);
   const { fetchNftTokenIds } = useContext(CovalentContext);
   const formatNftInfo = (nfts) => {
     if (!nfts?.length) return;
@@ -38,19 +40,25 @@ const Market = () => {
 
   useEffect(() => {
     async function fetchNftList() {
-      if (isFetched) return;
-      const tokenIds = await fetchNftTokenIds({
-        chainId: 97,
-        contract: "0xf035aa818ee4fd5b15dadbb1c8b66109b6ddf993",
-      });
-      setIsFetched(true);
-      const res = formatNftInfo(tokenIds);
-      setList(res);
+      try {
+        setLoading(true);
+        if (isFetched) return;
+        const tokenIds = await fetchNftTokenIds({
+          chainId: 97,
+          contract: "0xf035aa818ee4fd5b15dadbb1c8b66109b6ddf993",
+        });
+        setIsFetched(true);
+        const res = formatNftInfo(tokenIds);
+        setList(res);
+        setLoading(false)
+      } catch (error) {
+        setLoading(false)
+      }
+   
     }
     fetchNftList();
   }, [isFetched, fetchNftTokenIds]);
 
-  console.log(list)
   // ====== SORTING DATA BY HIGH, MID, LOW RATE =========
   const handleSort = (e) => {
 
@@ -96,12 +104,14 @@ const Market = () => {
                 </div>
               </div>
             </Col>
-
-            {list?.map((item) => (
-              <Col lg="3" md="4" sm="6" className="mb-4" key={item.id}>
-                <NftCard item={item} />
-              </Col>
-            ))}
+{
+  loading?<ContentLoader/>:<>  {list?.map((item) => (
+    <Col lg="3" md="4" sm="6" className="mb-4" key={item.id}>
+      <NftCard item={item} />
+    </Col>
+  ))}</>
+}
+          
           </Row>
         </Container>
       </section>

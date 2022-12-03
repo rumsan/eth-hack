@@ -7,9 +7,12 @@ import NftCard from "../Nft-card/NftCard";
 import { CovalentContext } from "../../../modules/covalent/context";
 import { SYMBOLS } from "../../../constants";
 
+import ContentLoader from '../../Atoms/ContentLoader'
+
 const Trending = () => {
   const [isFetched, setIsFetched] = useState(false);
   const [list, setList] = useState([]);
+  const [loading,setLoading]=useState(false);
   const { fetchNftTokenIds } = useContext(CovalentContext);
   const formatNftInfo = (nfts) => {
     if (!nfts?.length) return;
@@ -30,19 +33,27 @@ const Trending = () => {
 
   useEffect(() => {
     async function fetchNftList() {
-      if (isFetched) return;
-      const tokenIds = await fetchNftTokenIds({
-        chainId: 97,
-        contract: "0xf035aa818ee4fd5b15dadbb1c8b66109b6ddf993",
-      });
-      setIsFetched(true);
-      const res = formatNftInfo(tokenIds);
-      setList(res);
+      try {
+        setLoading(true);
+        if (isFetched) return;
+        const tokenIds = await fetchNftTokenIds({
+          chainId: 97,
+          contract: "0xf035aa818ee4fd5b15dadbb1c8b66109b6ddf993",
+        });
+        setIsFetched(true);
+        const res = formatNftInfo(tokenIds);
+        setList(res);
+        setLoading(false);
+      } catch (error) {
+        setLoading(false)
+      }
+ 
     }
     fetchNftList();
   }, [isFetched, fetchNftTokenIds]);
 
   return (
+    
     <section>
       <Container>
         <Row>
@@ -50,11 +61,13 @@ const Trending = () => {
             <h3 className="trending__title">Trending NFTs</h3>
           </Col>
 
-          {list.map((item, index) => (
+{loading?<ContentLoader/>:<>  {list.map((item, index) => (
             <Col lg="3" md="4" sm="6" key={index} className="mb-4">
               <NftCard item={item} />
             </Col>
-          ))}
+          ))}</>
+}
+        
         </Row>
       </Container>
     </section>
