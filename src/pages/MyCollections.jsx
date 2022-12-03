@@ -1,14 +1,12 @@
-import React, { useState,useContext,useEffect} from "react";
+import React, { useState, useContext, useEffect } from "react";
 
 import CommonSection from "../components/ui/Common-section/CommonSection";
 import API from "../constants/api";
 import { SYMBOLS } from "../constants";
 
-
 import { CovalentContext } from "../modules/covalent/context";
 import NftCard from "../components/ui/Nft-card/NftCard";
-import ContentLoader from '../components/Atoms/ContentLoader'
-
+import ContentLoader from "../components/Atoms/ContentLoader";
 
 import { Container, Row, Col } from "reactstrap";
 
@@ -19,7 +17,7 @@ const Market = () => {
   const handleItems = () => {};
   const [isFetched, setIsFetched] = useState(false);
   const [list, setList] = useState([]);
-  const [loading,setLoading]=useState(false);
+  const [loading, setLoading] = useState(false);
   const { fetchNftTokenIds } = useContext(CovalentContext);
   const formatNftInfo = (nfts) => {
     if (!nfts?.length) return;
@@ -30,7 +28,7 @@ const Market = () => {
         desc: d.tokenData.description,
         imgUrl: `${API.IPFS}/${d.tokenData.image}`,
         creator: d.owner,
-        creatorImg:"../../../assets/images/ava-01.png",
+        creatorImg: "../../../assets/images/ava-01.png",
         price: d.tokenData.price,
         symbol: SYMBOLS[`${d.tokenData.network}`],
       };
@@ -50,19 +48,16 @@ const Market = () => {
         setIsFetched(true);
         const res = formatNftInfo(tokenIds);
         setList(res);
-        setLoading(false)
+        setLoading(false);
       } catch (error) {
-        setLoading(false)
+        setLoading(false);
       }
-   
     }
     fetchNftList();
   }, [isFetched, fetchNftTokenIds]);
 
   // ====== SORTING DATA BY HIGH, MID, LOW RATE =========
-  const handleSort = (e) => {
-
-  };
+  const handleSort = (e) => {};
 
   return (
     <>
@@ -104,14 +99,18 @@ const Market = () => {
                 </div>
               </div>
             </Col>
-{
-  loading?<ContentLoader/>:<>  {list?.map((item) => (
-    <Col lg="3" md="4" sm="6" className="mb-4" key={item.id}>
-      <NftCard item={item} />
-    </Col>
-  ))}</>
-}
-          
+            {loading ? (
+              <ContentLoader />
+            ) : (
+              <>
+                {" "}
+                {list?.map((item) => (
+                  <Col lg="3" md="4" sm="6" className="mb-4" key={item.id}>
+                    <NftCard item={item} />
+                  </Col>
+                ))}
+              </>
+            )}
           </Row>
         </Container>
       </section>
