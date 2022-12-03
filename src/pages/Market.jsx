@@ -1,7 +1,11 @@
-import React, { useState } from "react";
+import React, { useState,useContext,useEffect} from "react";
 
 import CommonSection from "../components/ui/Common-section/CommonSection";
+import API from "../constants/api";
+import { SYMBOLS } from "../constants";
 
+
+import { CovalentContext } from "../modules/covalent/context";
 import NftCard from "../components/ui/Nft-card/NftCard";
 
 import { NFT__DATA } from "../assets/data/data";
@@ -12,10 +16,41 @@ import "../styles/market.css";
 
 const Market = () => {
   const [data, setData] = useState(NFT__DATA);
-
   const handleCategory = () => {};
-
   const handleItems = () => {};
+  const [isFetched, setIsFetched] = useState(false);
+  const [list, setList] = useState([]);
+  const { fetchNftTokenIds } = useContext(CovalentContext);
+  const formatNftInfo = (nfts) => {
+    if (!nfts?.length) return;
+    const formatted = nfts?.map((d) => {
+      return {
+        id: d.token_id,
+        title: d.tokenData.name,
+        desc: d.tokenData.description,
+        imgUrl: `${API.IPFS}/${d.tokenData.image}`,
+        creator: d.owner,
+        creatorImg:"../../../assets/images/ava-01.png",
+        price: d.tokenData.price,
+        symbol: SYMBOLS[`${d.tokenData.network}`],
+      };
+    });
+    return formatted;
+  };
+
+  useEffect(() => {
+    async function fetchNftList() {
+      if (isFetched) return;
+      const tokenIds = await fetchNftTokenIds({
+        chainId: 97,
+        contract: "0xf035aa818ee4fd5b15dadbb1c8b66109b6ddf993",
+      });
+      setIsFetched(true);
+      const res = formatNftInfo(tokenIds);
+      setList(res);
+    }
+    fetchNftList();
+  }, [isFetched, fetchNftTokenIds]);
 
   // ====== SORTING DATA BY HIGH, MID, LOW RATE =========
   const handleSort = (e) => {
@@ -85,7 +120,7 @@ const Market = () => {
               </div>
             </Col>
 
-            {data?.map((item) => (
+            {list?.map((item) => (
               <Col lg="3" md="4" sm="6" className="mb-4" key={item.id}>
                 <NftCard item={item} />
               </Col>

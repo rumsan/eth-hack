@@ -51,7 +51,7 @@ const handleAddToCart=()=>{
             className="bid__btn d-flex align-items-center gap-1"
             onClick={handleAddToCart}
           >
-            <i class="ri-shopping-cart-line"></i> Add to cart
+            <i className="ri-shopping-cart-line"></i> Add to cart
           </button>
           <span className="history__link">
             <Link to="#">View History</Link>

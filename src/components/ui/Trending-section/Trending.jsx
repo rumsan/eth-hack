@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { Container, Row, Col } from "reactstrap";
 import API from "../../../constants/api";
 
-import { NFT__DATA } from "../../../assets/data/data";
 import "./trending.css";
 import NftCard from "../Nft-card/NftCard";
 import { CovalentContext } from "../../../modules/covalent/context";
