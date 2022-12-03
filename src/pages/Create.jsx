@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 
-import { Container, Row, Col } from "reactstrap";
+import { Container, Row, Col, Input } from "reactstrap";
 import CommonSection from "../components/ui/Common-section/CommonSection";
 import NftCard from "../components/ui/Nft-card/NftCard";
 import img from "../assets/images/img-01.jpg";
 import avatar from "../assets/images/ava-01.png";
-
+import { SYMBOLS } from "../constants";
+import { uploadImage } from "../modules/ipfs/service";
 import "../styles/create-item.css";
 
 const item = {
@@ -19,6 +20,21 @@ const item = {
 };
 
 const Create = () => {
+  const [detail, setDetail] = useState(null);
+
+  const handleInputChange = (name, value) => {
+    const newDetail = { ...detail };
+    newDetail[`${name}`] = value;
+    setDetail({ ...newDetail });
+  };
+
+  const handleFileUpload = async (e) => {
+    const image = e.target.files[0];
+    const img = await uploadImage(image);
+    setDetail({ ...detail, image: img });
+  };
+
+  console.log(detail);
   return (
     <>
       <CommonSection title="Create Item" />
@@ -36,47 +52,57 @@ const Create = () => {
                 <form>
                   <div className="form__input">
                     <label htmlFor="">Upload File</label>
-                    <input type="file" className="upload__input" />
+                    <input
+                      type="file"
+                      className="upload__input"
+                      accept=".png,.jpg"
+                      onChange={handleFileUpload}
+                    />
                   </div>
-
+                  <div className="form__input">
+                    <label htmlFor="">Select Network</label>
+                    <Input
+                      type="select"
+                      value={detail?.network}
+                      onChange={(e) =>
+                        handleInputChange("network", e.target.value)
+                      }
+                    >
+                      <option value="">Select Network</option>
+                      <option value="97">Binance Testnet</option>
+                      <option value="80001">Polygon Testnet</option>
+                    </Input>
+                  </div>
                   <div className="form__input">
                     <label htmlFor="">Price</label>
                     <input
                       type="number"
-                      placeholder="Enter price for one item (ETH)"
+                      placeholder="Enter price"
+                      onChange={(e) =>
+                        handleInputChange("price", e.target.value)
+                      }
                     />
                   </div>
-
-                  <div className="form__input">
-                    <label htmlFor="">Minimum Bid</label>
-                    <input type="number" placeholder="Enter minimum bid" />
-                  </div>
-
-                  <div className=" d-flex align-items-center gap-4">
-                    <div className="form__input w-50">
-                      <label htmlFor="">Starting Date</label>
-                      <input type="date" />
-                    </div>
-
-                    <div className="form__input w-50">
-                      <label htmlFor="">Expiration Date</label>
-                      <input type="date" />
-                    </div>
-                  </div>
-
                   <div className="form__input">
                     <label htmlFor="">Title</label>
-                    <input type="text" placeholder="Enter title" />
+                    <input
+                      type="text"
+                      placeholder="Enter NFT title"
+                      onChange={(e) =>
+                        handleInputChange("name", e.target.value)
+                      }
+                    />
                   </div>
 
                   <div className="form__input">
                     <label htmlFor="">Description</label>
                     <textarea
-                      name=""
-                      id=""
-                      rows="7"
+                      rows="6"
                       placeholder="Enter description"
                       className="w-100"
+                      onChange={(e) =>
+                        handleInputChange("description", e.target.value)
+                      }
                     ></textarea>
                   </div>
                 </form>

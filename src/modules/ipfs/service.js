@@ -15,25 +15,25 @@ export function fetchTokenUri(hash) {
   });
 }
 
-export  async function addImages(file){
+export async function uploadImage(file) {
   let data = new FormData();
-  data.append("file", file, { filepath: "anyname" });
+  data.append("file", file, { filepath: "ease-nft" });
   const IPFS_GATEWAY = `${API.IPFS_PINATA}`;
-  let hash ;
-  await  axios.post(IPFS_GATEWAY,data,{
-    maxBodyLength:"Infinity",
-    headers:{
-      "Content-Type": `multipart/form-data;boundary =${data._boundary}`,
-        pinata_api_key:  process.env.REACT_APP_PINATA_KEY,
-        pinata_secret_api_key: process.env.REACT_APP_PINATA_KEY,
-    }
-
-  }).then(function(response){
-    hash = response.data.IpfsHash;
-  }).catch(function (err){
-    console.log(err)
-  })
+  let hash;
+  await axios
+    .post(IPFS_GATEWAY, data, {
+      maxBodyLength: "Infinity",
+      headers: {
+        "Content-Type": `multipart/form-data;boundary =${data._boundary}`,
+        pinata_api_key: process.env.REACT_APP_PINATA_KEY,
+        pinata_secret_api_key: process.env.REACT_APP_PINATA_SECRET,
+      },
+    })
+    .then(function (response) {
+      hash = response.data.IpfsHash;
+    })
+    .catch(function (err) {
+      console.log(err);
+    });
   return hash;
-
-
 }
