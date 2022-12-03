@@ -5,7 +5,7 @@ import API from "../constants/api";
 import { SYMBOLS } from "../constants";
 
 import { CovalentContext } from "../modules/covalent/context";
-import NftCard from "../components/ui/Nft-card/NftCard";
+import MyCollectionCard from "../components/ui/My-collection-card/MyCollectionCard";
 import ContentLoader from "../components/Atoms/ContentLoader";
 
 import { Container, Row, Col } from "reactstrap";
@@ -106,7 +106,7 @@ const Market = () => {
                 {" "}
                 {list?.map((item) => (
                   <Col lg="3" md="4" sm="6" className="mb-4" key={item.id}>
-                    <NftCard item={item} />
+                    <MyCollectionCard item={item} />
                   </Col>
                 ))}
               </>
