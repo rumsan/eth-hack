@@ -29,7 +29,16 @@ const Create = () => {
   const { mintAndSellNft } = useContext(NftContext);
   const [isProcessing, setIsProcessing] = useState(false);
 
-  const handleInputChange = (name, value) => {
+  const handleInputChange = async (name, value) => {
+    if (name === "network") {
+      if (value !== chainId) {
+        const network = await getNetworkConnectParams(value);
+        await window.ethereum.request({
+          method: "wallet_switchEthereumChain",
+          params: [{ chainId: network.chainId }],
+        });
+      }
+    }
     const newDetail = { ...detail };
     newDetail[`${name}`] = value;
     setDetail({ ...newDetail });
