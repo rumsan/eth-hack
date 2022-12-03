@@ -7,6 +7,7 @@ import { NavLink, Link } from "react-router-dom";
 import { useWeb3React } from "@web3-react/core";
 import { AppContext } from "../../modules/app/context";
 import WalletDropDown from "../Atoms/WalletDropdown";
+import NotificationDropdown from "../Atoms/NotificationDropdown";
 
 const NAV__LINKS = [
   {
@@ -85,14 +86,14 @@ const Header = () => {
                       navClass.isActive ? "active" : ""
                     }
                   >
-                    {!account && index===3?null:item.display}
+                    {!account && index === 3 ? null : item.display}
                   </NavLink>
                 </li>
               ))}
             </ul>
           </div>
 
-          <div className="nav__right d-flex align-items-center gap-5 ">
+          <div className="nav__right d-flex align-items-center  gap-3">
             <button className="btn d-flex gap-2 align-items-center">
               <span>
                 <i className="ri-wallet-line"></i>
@@ -107,6 +108,7 @@ const Header = () => {
                 />
               )}
             </button>
+            {account && <NotificationDropdown direction="down" />}
             <span className="mobile__menu">
               <i className="ri-menu-line" onClick={toggleMenu}></i>
             </span>

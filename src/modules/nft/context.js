@@ -1,10 +1,10 @@
-import React, { createContext, useReducer } from "react";
+import React, { createContext } from "react";
 import { useWeb3React } from "@web3-react/core";
 import { makeContract } from "../../utils/contract";
 import marketPlaceAbi from "../../contract/abi/MarketPlace.json";
-import nftAbi from "../../contract/abi/NFT.json";
 import { CONTRACT_ADDRESS } from "../../contract/contractAddress";
 import { useNotificationContext } from "../Notification/context";
+import Web3 from "web3";
 
 // import reducer from "./reducer";
 // import * as Service from "./service";
@@ -23,13 +23,14 @@ export const NftContextProvider = ({ children }) => {
       marketPlaceAbi.abi,
       CONTRACT_ADDRESS.marketPlace[chainId]
     );
+    const Price = Web3.utils.toWei(price);
     let tx = await marketPlace.methods
-      .mintAndSell(price, tokenUri)
+      .mintAndSell(Price, tokenUri)
       .send({ from: account });
     if (tx) {
       const title = "Nft listed ";
       const body = `Your nft is listed for sale.`;
-      sendNotification(title, body, account);
+      sendNotification({ title, body, receiver: account });
     }
   };
 
@@ -41,7 +42,8 @@ export const NftContextProvider = ({ children }) => {
       marketPlaceAbi,
       CONTRACT_ADDRESS.marketPlace[chainId]
     );
-    let tx = await marketPlace.methods.buy(tokenId).send({ value: price });
+    const Price = Web3.utils.toWei(price);
+    let tx = await marketPlace.methods.buy(tokenId).send({ value: Price });
     if (tx) {
       let title = "Nft Bought ";
       let body = `You have successfully bought the nft.`;
@@ -49,7 +51,7 @@ export const NftContextProvider = ({ children }) => {
 
       title = "Nft Sold ";
       body = `Your nft  have been  successfully sold.`;
-      sendNotification(title, body, account);
+      sendNotification(title, body, previousOwner);
     }
   };
 
