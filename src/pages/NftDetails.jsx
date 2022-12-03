@@ -3,15 +3,12 @@ import React,{useContext,useState,useEffect} from "react";
 import CommonSection from "../components/ui/Common-section/CommonSection";
 import { useParams } from "react-router-dom";
 import { Container, Row, Col } from "reactstrap";
-import { NFT__DATA } from "../assets/data/data";
 import API from "../constants/api";
 import { CovalentContext } from "../modules/covalent/context";
 
-import LiveAuction from "../components/ui/Live-auction/LiveAuction";
 import { fetchTokenUri } from "../modules/ipfs/service";
 
 import "../styles/nft-details.css";
-import { SYMBOLS } from "../constants";
 
 import { Link } from "react-router-dom";
 import defaultImg from "../assets/images/ava-01.png";
@@ -21,18 +18,7 @@ const NftDetails = () => {
   const { fetchNftMetadata } = useContext(CovalentContext);
   const [isFetched, setIsFetched] = useState(false);
   const [detail,setDetail]=useState(null);
-  const formatNftInfo = (d) => {
-      return {
-        id: d.token_id,
-        title: d.tokenData.name,
-        desc: d.tokenData.description,
-        imgUrl: `${API.IPFS}/${d.tokenData.image}`,
-        creator: d.owner,
-        creatorImg:"../../../assets/images/ava-01.png",
-        price: d.tokenData.price,
-        symbol: SYMBOLS[`${d.tokenData.network}`],
-      };
-  };
+ 
 
   useEffect(() => {
     async function fetchNftDetail() {
@@ -45,9 +31,10 @@ const NftDetails = () => {
           const ipfsInfo = await fetchTokenUri(nft.data.items[0].nft_data[0].external_data.external_url);
           const nftData=nft.data.items[0]
           setDetail({...nftData,...ipfsInfo});
+          setIsFetched(true)
     }
     fetchNftDetail();
-  }, [fetchNftMetadata,isFetched]);
+  }, [fetchNftMetadata,isFetched,id]);
 
 
 
