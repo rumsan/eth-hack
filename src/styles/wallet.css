@@ -31,3 +31,10 @@
   font-size: 0.8rem;
   line-height: 28px;
 }
+
+
+#wallet-dropdown{
+  background-color: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+}

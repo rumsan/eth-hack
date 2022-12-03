@@ -1,8 +1,12 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect,useContext,useCallback } from "react";
 import "./header.css";
 import { Container } from "reactstrap";
 
 import { NavLink, Link } from "react-router-dom";
+
+import { useWeb3React } from '@web3-react/core';
+import { AppContext } from "../../modules/app/context";
+import WalletDropDown from '../Atoms/WalletDropdown'
 
 const NAV__LINKS = [
   {
@@ -23,6 +27,17 @@ const Header = () => {
   const headerRef = useRef(null);
 
   const menuRef = useRef(null);
+
+  const { account } = useWeb3React();
+  
+
+  const { connectMetaMask,disconnect} =
+    useContext(AppContext);
+    
+
+  const handleConnectWallet = useCallback(async (status) => {
+    connectMetaMask();
+  }, [connectMetaMask]);
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
@@ -52,7 +67,7 @@ const Header = () => {
               <span>
                 <i className="ri-fire-fill"></i>
               </span>
-              NFTs
+             <Link to="/" style={{textDecoration:'none'}}> Ease NFTs</Link>
             </h2>
           </div>
 
@@ -78,9 +93,10 @@ const Header = () => {
               <span>
                 <i className="ri-wallet-line"></i>
               </span>
-              <Link to="/wallet">Connect Wallet</Link>
+              <Link onClick={handleConnectWallet}>{account?account:'Connect Wallet'}</Link>
+              {account  && <WalletDropDown onClickLogout={()=>disconnect()} direction="down"/>
+}
             </button>
-
             <span className="mobile__menu">
               <i className="ri-menu-line" onClick={toggleMenu}></i>
             </span>
