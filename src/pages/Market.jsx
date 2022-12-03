@@ -8,14 +8,12 @@ import { SYMBOLS } from "../constants";
 import { CovalentContext } from "../modules/covalent/context";
 import NftCard from "../components/ui/Nft-card/NftCard";
 
-import { NFT__DATA } from "../assets/data/data";
 
 import { Container, Row, Col } from "reactstrap";
 
 import "../styles/market.css";
 
 const Market = () => {
-  const [data, setData] = useState(NFT__DATA);
   const handleCategory = () => {};
   const handleItems = () => {};
   const [isFetched, setIsFetched] = useState(false);
@@ -54,29 +52,7 @@ const Market = () => {
 
   // ====== SORTING DATA BY HIGH, MID, LOW RATE =========
   const handleSort = (e) => {
-    const filterValue = e.target.value;
 
-    if (filterValue === "high") {
-      const filterData = NFT__DATA.filter((item) => item.currentBid >= 6);
-
-      setData(filterData);
-    }
-
-    if (filterValue === "mid") {
-      const filterData = NFT__DATA.filter(
-        (item) => item.currentBid >= 5.5 && item.currentBid < 6
-      );
-
-      setData(filterData);
-    }
-
-    if (filterValue === "low") {
-      const filterData = NFT__DATA.filter(
-        (item) => item.currentBid >= 4.89 && item.currentBid < 5.5
-      );
-
-      setData(filterData);
-    }
   };
 
   return (

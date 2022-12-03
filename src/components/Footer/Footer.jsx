@@ -118,7 +118,7 @@ const Footer = () => {
 
           <Col lg="12" className=" mt-4 text-center">
             <p className="copyright">
-              Copyrights 2022 Developed by Rumsan Nepal. <a href="" style={{color:'white',textDecoration:'rgba(255, 255, 255, 0.772)'}}><strong>@rumsan</strong></a>. All Rights
+              Copyrights 2022 Developed by Rumsan Nepal. <a href="https://www.rumsan.com" style={{color:'white',textDecoration:'rgba(255, 255, 255, 0.772)'}}><strong>@rumsan</strong></a>. All Rights
               Reserved.
             </p>
           </Col>

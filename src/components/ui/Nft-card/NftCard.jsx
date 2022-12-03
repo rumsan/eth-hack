@@ -7,7 +7,7 @@ import defaultImg from '../../../assets/images/ava-04.png'
 import coverImage from '../../../assets/images/img-01.jpg'
 
 const NftCard = (props) => {
-  const { title, id, price, creatorImg, imgUrl, creator, symbol } = props.item;
+  const { title, id, price, imgUrl, creator, symbol } = props.item;
 
 const handleAddToCart=()=>{
     

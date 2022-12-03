@@ -1,12 +1,12 @@
-import React, { createContext, useReducer } from "react";
-import reducer from "./reducer";
+import React, { createContext } from "react";
+// import reducer from "./reducer";
 import * as Service from "./service";
 
 const initialState = {};
 
 export const CovalentContext = createContext(initialState);
 export const CovalentContextProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  // const [state, dispatch] = useReducer(reducer, initialState);
 
   function fetchNftTokenIds(params) {
     return Service.fetchNftTokenIds(params);
