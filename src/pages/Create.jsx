@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback, useContext } from "react";
-import { Container, Row, Col, Input, Button } from "reactstrap";
+import { Container, Row, Col, Input, Button, Spinner } from "reactstrap";
 import CommonSection from "../components/ui/Common-section/CommonSection";
 import NftCard from "../components/ui/Nft-card/NftCard";
 import avatar from "../assets/images/ava-01.png";
@@ -10,6 +10,7 @@ import { useWeb3React } from "@web3-react/core";
 import { SYMBOLS } from "../constants";
 import { NftContext } from "../modules/nft/context";
 import Swal from "sweetalert2";
+import { getNetworkConnectParams } from "../utils";
 
 const defaultData = {
   id: "1",
@@ -22,10 +23,11 @@ const defaultData = {
 
 const Create = () => {
   const [detail, setDetail] = useState(null);
-  const { account } = useWeb3React();
+  const { account, chainId } = useWeb3React();
   const [preview, setPreview] = useState(defaultData);
   const [image, setImage] = useState(null);
   const { mintAndSellNft } = useContext(NftContext);
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const handleInputChange = (name, value) => {
     const newDetail = { ...detail };
@@ -56,9 +58,17 @@ const Create = () => {
   const handleCreateNft = async (e) => {
     try {
       e.preventDefault();
+      if (!detail) return;
       if (!account)
         return Swal.fire("ERROR", "Please Connect Your Wallet", "error");
-      if (!detail) return;
+      setIsProcessing(true);
+      if (detail.network !== chainId) {
+        const network = await getNetworkConnectParams(detail.network);
+        await window.ethereum.request({
+          method: "wallet_switchEthereumChain",
+          params: [{ chainId: network.chainId }],
+        });
+      }
       const metadata = {
         name: detail.name,
         description: detail.description,
@@ -70,9 +80,11 @@ const Create = () => {
       Swal.fire("SUCCESS", "NFT Minting Success", "success");
       setDetail(null);
       setPreview(defaultData);
+      setIsProcessing(false);
     } catch (error) {
       console.log(error);
       Swal.fire("ERROR", "NFT Minting Failed", "error");
+      setIsProcessing(false);
     }
   };
 
@@ -156,9 +168,15 @@ const Create = () => {
                     ></textarea>
                   </div>
                   <div className="form__input">
-                    <Button color="primary" type="submit">
-                      Create NFT
-                    </Button>
+                    {isProcessing ? (
+                      <Spinner animation="border" variant="primary" />
+                    ) : (
+                      <>
+                        <Button color="primary" type="submit">
+                          Create NFT
+                        </Button>
+                      </>
+                    )}
                   </div>
                 </form>
               </div>
