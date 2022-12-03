@@ -16,7 +16,6 @@ function NotificationDropdown({ direction, notifications, msgs, ...args }) {
   const toggleBadge = () => {
     setShowBadge(false);
   };
-  console.log({ notifications });
 
   return (
     <Dropdown isOpen={dropdownOpen} toggle={toggle} direction={direction}>

@@ -48,14 +48,12 @@ const Header = () => {
 
   const getNotifications = useCallback(async () => {
     try {
-      console.log("Inside Nto");
       if (!account) return;
       const notifications = await PushAPI.user.getFeeds({
         user: `eip155:5:0x3e63Fc89c0DE2Fc4ae6a6cD3ea2634947204919D`, //${account}`, // user address in CAIP
         spam: true,
         env: "staging",
       });
-      console.log({ every: notifications });
       setNotification(notifications);
     } catch (e) {
       console.log(e);
