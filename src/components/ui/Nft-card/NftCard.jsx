@@ -1,22 +1,23 @@
-import React,{useContext, useState} from "react";
-import { Link ,useNavigate} from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { NftContext } from "../../../modules/nft/context";
 
 import "./nft-card.css";
 
 import defaultImg from "../../../assets/images/ava-04.png";
 import coverImage from "../../../assets/images/img-01.jpg";
-import MyToolTip from "../../Atoms/Tooltip"
+import MyToolTip from "../../Atoms/Tooltip";
 
 const NftCard = (props) => {
   const { isPreview } = props;
-  const { title, id, price, imgUrl, creator, symbol,previousOwner,chainId } = props?.item;
-  const navigate = useNavigate()
+  const { title, id, price, imgUrl, creator, symbol, previousOwner, chainId } =
+    props?.item;
+  const navigate = useNavigate();
 
   const [copied, setCopied] = useState(false);
 
-  const  handleBuy = async() => {
-    navigate(`/nft-detail/${id}/chain-id/${chainId}`)
+  const handleBuy = async () => {
+    navigate(`/nft-detail/${id}/chain-id/${chainId}`);
   };
 
   const handleCopyToClipboard = (e) => {
@@ -34,7 +35,6 @@ const NftCard = (props) => {
       }, 1000)
     );
   };
-
 
   return (
     <div className="single__nft__card">
@@ -65,7 +65,12 @@ const NftCard = (props) => {
           <div className="creator__info w-100 d-flex align-items-center justify-content-between">
             <div>
               <h6>Created By</h6>
-              <Link id="test" onClick={handleCopyToClipboard} className="text-white" style={{textDecoration:'none'}}> 
+              <Link
+                id="test"
+                onClick={handleCopyToClipboard}
+                className="text-white"
+                style={{ textDecoration: "none" }}
+              >
                 {creator.substring(0, 4) +
                   "..." +
                   creator.substring(creator.length, creator.length - 4)}
@@ -90,9 +95,6 @@ const NftCard = (props) => {
           >
             <i className="ri-shopping-cart-line"></i> Buy
           </button>
-          <span className="history__link">
-            <Link to={`${isPreview ? "#" : "#"}`}>View History</Link>
-          </span>
         </div>
       </div>
     </div>
