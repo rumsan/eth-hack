@@ -9,8 +9,8 @@ import StepSection from "../components/ui/Step-section/StepSection";
 const Home = () => {
   return (
     <>
-      <HeroSection />
-      <StepSection />
+      {/* <HeroSection /> */}
+      {/* <StepSection /> */}
       {/* <LiveAuction /> */}
       {/* <SellerSection /> */}
       <Trending />

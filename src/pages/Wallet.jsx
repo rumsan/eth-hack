@@ -6,17 +6,6 @@ import { Container, Row, Col } from "reactstrap";
 import "../styles/wallet.css";
 
 const wallet__data = [
-  {
-    title: "Bitcoin",
-    desc: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium accusamus repellat rerum consequatur explicabo? Reiciendis!",
-    icon: "ri-bit-coin-line",
-  },
-
-  {
-    title: "Coinbase",
-    desc: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium accusamus repellat rerum consequatur explicabo? Reiciendis!",
-    icon: "ri-coin-line",
-  },
 
   {
     title: "Metamask",
@@ -24,11 +13,7 @@ const wallet__data = [
     icon: "ri-money-cny-circle-line",
   },
 
-  {
-    title: "Authereum",
-    desc: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium accusamus repellat rerum consequatur explicabo? Reiciendis!",
-    icon: "ri-bit-coin-line",
-  },
+
 ];
 
 const Wallet = () => {
