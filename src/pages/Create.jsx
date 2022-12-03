@@ -34,7 +34,6 @@ const Create = () => {
     setDetail({ ...detail, image: img });
   };
 
-  console.log(detail);
   return (
     <>
       <CommonSection title="Create Item" />
@@ -44,7 +43,7 @@ const Create = () => {
           <Row>
             <Col lg="3" md="4" sm="6">
               <h5 className="mb-4 text-light">Preview Item</h5>
-              <NftCard item={item} />
+              <NftCard item={detail} />
             </Col>
 
             <Col lg="9" md="8" sm="6">

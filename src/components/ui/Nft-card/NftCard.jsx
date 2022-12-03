@@ -7,7 +7,8 @@ import defaultImg from "../../../assets/images/ava-04.png";
 import coverImage from "../../../assets/images/img-01.jpg";
 
 const NftCard = (props) => {
-  const { title, id, price, imgUrl, creator, symbol } = props.item;
+  const { isPreview } = props;
+  const { title, id, price, imgUrl, creator, symbol } = props?.item;
   const handleAddToCart = () => {};
   return (
     <div className="single__nft__card">
@@ -27,7 +28,7 @@ const NftCard = (props) => {
 
       <div className="nft__content">
         <h5 className="nft__title">
-          <Link to={`/nft-detail/${id}`}>{title}</Link>
+          <Link to={isPreview ? "" : `/nft-detail/${id}`}>{title}</Link>
         </h5>
 
         <div className="creator__info-wrapper d-flex gap-3">
@@ -56,13 +57,14 @@ const NftCard = (props) => {
 
         <div className=" mt-3 d-flex align-items-center justify-content-between">
           <button
+            disabled={isPreview === true}
             className="bid__btn d-flex align-items-center gap-1"
             onClick={handleAddToCart}
           >
             <i className="ri-shopping-cart-line"></i> Add to cart
           </button>
           <span className="history__link">
-            <Link to="#">View History</Link>
+            <Link to={`${isPreview ? "#" : "#"}`}>View History</Link>
           </span>
         </div>
       </div>
