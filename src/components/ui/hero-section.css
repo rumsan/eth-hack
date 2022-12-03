@@ -57,6 +57,15 @@
   border-radius: 7px;
 }
 
+.btn-text{
+  color :white !important;
+  text-decoration: center !important;
+}
+
+.btn-link{
+  text-decoration: none !important;
+}
+
 @media only screen and (max-width: 992px) {
   .hero__img {
     width: 300px;
