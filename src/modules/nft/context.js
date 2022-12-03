@@ -29,7 +29,7 @@ export const NftContextProvider = ({ children }) => {
     if (tx) {
       const title = "Nft listed ";
       const body = `Your nft is listed for sale.`;
-      sendNotification(title, body, account);
+      sendNotification({ title, body, receiver: account });
     }
   };
 
@@ -49,7 +49,7 @@ export const NftContextProvider = ({ children }) => {
 
       title = "Nft Sold ";
       body = `Your nft  have been  successfully sold.`;
-      sendNotification(title, body, account);
+      sendNotification(title, body, previousOwner);
     }
   };
 
