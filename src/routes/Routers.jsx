@@ -6,7 +6,6 @@ import Home from "../pages/Home";
 import Market from "../pages/Market";
 import Create from "../pages/Create";
 
-import Wallet from "../pages/Wallet";
 import NftDetails from "../pages/NftDetails";
 
 const Routers = () => {
@@ -16,7 +15,6 @@ const Routers = () => {
       <Route path="/home" element={<Home />} />
       <Route path="/market" element={<Market />} />
       <Route path="/create" element={<Create />} />
-      <Route path="/wallet" element={<Wallet />} />
       <Route path="/nft-detail/:id" element={<NftDetails />} />
     </Routes>
   );
