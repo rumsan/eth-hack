@@ -6,6 +6,7 @@ import { Container, Row, Col } from "reactstrap";
 import API from "../constants/api";
 import { CovalentContext } from "../modules/covalent/context";
 import { getContract } from "../utils/web3";
+import { useWeb3React } from "@web3-react/core";
 
 import { fetchTokenUri } from "../modules/ipfs/service";
 
@@ -17,21 +18,28 @@ import { CONTRACT_ADDRESS } from "../contract/contractAddress";
 import marketPlaceAbi from "../contract/abi/MarketPlace.json";
 import Web3 from "web3";
 import { NftContext } from "../modules/nft/context";
+import { getNetworkConnectParams } from "../utils";
 
 const NftDetails = () => {
-  const { id, chainId } = useParams();
+  const { id, chainId: networkId } = useParams();
+  const { chainId, account } = useWeb3React();
   const { fetchNftMetadata } = useContext(CovalentContext);
   const [isFetched, setIsFetched] = useState(false);
   const [detail, setDetail] = useState(null);
 
   const marketPlace = getContract(
     marketPlaceAbi.abi,
-    CONTRACT_ADDRESS.marketPlace[chainId],
-    chainId
+    CONTRACT_ADDRESS.marketPlace[networkId],
+    networkId
   );
   const { buyNft } = useContext(NftContext);
 
   const handleBuy = async () => {
+    if (Number(networkId) !== chainId) {
+      console.log("Switch");
+      handleNetwork();
+      return;
+    }
     await buyNft({
       tokenId: id,
       price: detail?.price,
@@ -39,12 +47,22 @@ const NftDetails = () => {
     });
   };
 
+  const handleNetwork = async () => {
+    if (Number(networkId) !== chainId) {
+      const network = await getNetworkConnectParams(networkId);
+      await window.ethereum.request({
+        method: "wallet_switchEthereumChain",
+        params: [{ chainId: network.chainId }],
+      });
+    }
+  };
+
   useEffect(() => {
     async function fetchNftDetail() {
       if (isFetched) return;
       const nft = await fetchNftMetadata({
-        chainId: Number(chainId),
-        contract: CONTRACT_ADDRESS.nft[chainId],
+        chainId: Number(networkId),
+        contract: CONTRACT_ADDRESS.nft[networkId],
         tokenId: id,
       });
       const ipfsInfo = await fetchTokenUri(
