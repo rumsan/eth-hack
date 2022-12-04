@@ -87,3 +87,20 @@ export function fetchNFTsFromWalletAddress(params) {
       });
   });
 }
+
+export function fetchMyNFTsCollection(params) {
+  const { chainId, contract, wallet } = params;
+  const url = `${API.COVALENT}/${chainId}/address/${wallet}/balances_v2`;
+  const appendedUrl = appendQueryParam(url).concat("&nft=true");
+  return new Promise((resolve, reject) => {
+    axios
+      .get(appendedUrl)
+      .then((res) => {
+        const { items } = res.data.data;
+        resolve(items);
+      })
+      .catch((err) => {
+        reject(err?.data);
+      });
+  });
+}
