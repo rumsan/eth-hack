@@ -6,7 +6,7 @@ import { Container, Row, Col } from "reactstrap";
 import API from "../constants/api";
 import { CovalentContext } from "../modules/covalent/context";
 import { getContract } from "../utils/web3";
-
+import { useWeb3React } from "@web3-react/core";
 
 import { fetchTokenUri } from "../modules/ipfs/service";
 
@@ -18,29 +18,51 @@ import { CONTRACT_ADDRESS } from "../contract/contractAddress";
 import marketPlaceAbi from "../contract/abi/MarketPlace.json";
 import Web3 from "web3";
 import { NftContext } from "../modules/nft/context";
-
+import { getNetworkConnectParams } from "../utils";
 
 const NftDetails = () => {
-  const { id ,chainId} = useParams();
+  const { id, chainId: networkId } = useParams();
+  const { chainId, account } = useWeb3React();
   const { fetchNftMetadata } = useContext(CovalentContext);
   const [isFetched, setIsFetched] = useState(false);
   const [detail, setDetail] = useState(null);
 
-  const marketPlace = getContract(marketPlaceAbi.abi,CONTRACT_ADDRESS.marketPlace[chainId],chainId);
-  const{buyNft} = useContext(NftContext);
+  const marketPlace = getContract(
+    marketPlaceAbi.abi,
+    CONTRACT_ADDRESS.marketPlace[networkId],
+    networkId
+  );
+  const { buyNft } = useContext(NftContext);
 
-  const  handleBuy = async() => {
-    await buyNft({tokenId:id,price:detail?.price,previousOwner:detail?.previousOwner});
-
+  const handleBuy = async () => {
+    if (Number(networkId) !== chainId) {
+      console.log("Switch");
+      handleNetwork();
+      return;
+    }
+    await buyNft({
+      tokenId: id,
+      price: detail?.price,
+      previousOwner: detail?.previousOwner,
+    });
   };
 
+  const handleNetwork = async () => {
+    if (Number(networkId) !== chainId) {
+      const network = await getNetworkConnectParams(networkId);
+      await window.ethereum.request({
+        method: "wallet_switchEthereumChain",
+        params: [{ chainId: network.chainId }],
+      });
+    }
+  };
 
   useEffect(() => {
     async function fetchNftDetail() {
       if (isFetched) return;
       const nft = await fetchNftMetadata({
-        chainId: Number(chainId),
-        contract: CONTRACT_ADDRESS.nft[chainId],
+        chainId: Number(networkId),
+        contract: CONTRACT_ADDRESS.nft[networkId],
         tokenId: id,
       });
       const ipfsInfo = await fetchTokenUri(
@@ -51,7 +73,7 @@ const NftDetails = () => {
       const price = Web3.utils.fromWei(data.minPrice);
       const previousOwner = data.nftOwner;
 
-      setDetail({ ...nftData, ...ipfsInfo ,price,previousOwner});
+      setDetail({ ...nftData, ...ipfsInfo, price, previousOwner });
       setIsFetched(true);
     }
     fetchNftDetail();
@@ -92,7 +114,7 @@ const NftDetails = () => {
                       {/* <i className="ri-send-plane-line"></i> */}
                     </span>
                     {/* <span> */}
-                      {/* <i className="ri-more-2-line"></i> */}
+                    {/* <i className="ri-more-2-line"></i> */}
                     {/* </span> */}
                   </div>
                 </div>
@@ -109,10 +131,11 @@ const NftDetails = () => {
                 </div>
 
                 <p className="my-4">{detail?.description}</p>
-                <button className="singleNft-btn d-flex align-items-center gap-2 w-100" 
-                onClick={handleBuy}
+                <button
+                  className="singleNft-btn d-flex align-items-center gap-2 w-100"
+                  onClick={handleBuy}
                 >
-                  <i className="ri-shopping-cart-line"></i> Bjuy Now
+                  <i className="ri-shopping-cart-line text-white"></i> Buy Now
                   {/* <Link to="/wallet">Add to cart</Link> */}
                 </button>
               </div>

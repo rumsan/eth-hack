@@ -1,6 +1,13 @@
-import React, { useRef, useEffect, useContext, useCallback } from "react";
+import React, {
+  useRef,
+  useEffect,
+  useState,
+  useContext,
+  useCallback,
+} from "react";
 import "./header.css";
 import { Container } from "reactstrap";
+import * as PushAPI from "@pushprotocol/restapi";
 
 import { NavLink, Link } from "react-router-dom";
 
@@ -27,11 +34,9 @@ const NAV__LINKS = [
 
 const Header = () => {
   const headerRef = useRef(null);
-
   const menuRef = useRef(null);
-
+  const [notification, setNotification] = useState([]);
   const { account } = useWeb3React();
-
   const { connectMetaMask, disconnect } = useContext(AppContext);
 
   const handleConnectWallet = useCallback(
@@ -40,6 +45,20 @@ const Header = () => {
     },
     [connectMetaMask]
   );
+
+  const getNotifications = useCallback(async () => {
+    try {
+      if (!account) return;
+      const notifications = await PushAPI.user.getFeeds({
+        user: `eip155:5:0x3e63Fc89c0DE2Fc4ae6a6cD3ea2634947204919D`, //${account}`, // user address in CAIP
+        spam: true,
+        env: "staging",
+      });
+      setNotification(notifications);
+    } catch (e) {
+      console.log(e);
+    }
+  }, [account]);
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
@@ -58,8 +77,11 @@ const Header = () => {
     };
   }, []);
 
-  const toggleMenu = () => menuRef.current.classList.toggle("active__menu");
+  useEffect(() => {
+    getNotifications();
+  }, [getNotifications]);
 
+  const toggleMenu = () => menuRef.current.classList.toggle("active__menu");
   return (
     <header className="header" ref={headerRef}>
       <Container>
@@ -107,8 +129,15 @@ const Header = () => {
                   direction="down"
                 />
               )}
+              {account && (
+                <NotificationDropdown
+                  direction="down"
+                  notifications={notification}
+                  // msgs={getNotifications()}
+                />
+              )}
             </button>
-            {account && <NotificationDropdown direction="down" />}
+
             <span className="mobile__menu">
               <i className="ri-menu-line" onClick={toggleMenu}></i>
             </span>

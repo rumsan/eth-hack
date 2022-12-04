@@ -50,11 +50,11 @@ export const NftContextProvider = ({ children }) => {
       if (tx) {
         let title = "Nft Bought ";
         let body = `You have successfully bought the nft.`;
-        sendNotification(title, body, account);
+        sendNotification({title, body,receiver: account});
 
         title = "Nft Sold ";
         body = `Your nft  have been  successfully sold.`;
-        sendNotification(title, body, previousOwner);
+        sendNotification({title, body,receiver: previousOwner});
       }
     } catch (err) {
       console.log(err);
@@ -75,7 +75,7 @@ export const NftContextProvider = ({ children }) => {
     if (tx) {
       const title = "Nft listed ";
       const body = `Your nft is listed for sale.`;
-      sendNotification(title, body, account);
+      sendNotification({title, body,receiver: account});
     }
   };
   //   const [state, dispatch] = useReducer(reducer, initialState);

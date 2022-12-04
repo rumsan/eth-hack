@@ -20,6 +20,10 @@ export const CovalentContextProvider = ({ children }) => {
     return Service.fetchNFTsFromWalletAddress(params);
   }
 
+  function fetchMyNFTsCollection(params) {
+    return Service.fetchMyNFTsCollection(params);
+  }
+
   return (
     <CovalentContext.Provider
       value={{
@@ -27,6 +31,7 @@ export const CovalentContextProvider = ({ children }) => {
         fetchNftTokenIds,
         fetchNftMetadata,
         fetchNFTsFromWalletAddress,
+        fetchMyNFTsCollection,
       }}
     >
       {children}
