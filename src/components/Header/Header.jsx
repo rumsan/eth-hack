@@ -50,7 +50,7 @@ const Header = () => {
     try {
       if (!account) return;
       const notifications = await PushAPI.user.getFeeds({
-        user: `eip155:5:0x3e63Fc89c0DE2Fc4ae6a6cD3ea2634947204919D`, //${account}`, // user address in CAIP
+        user: `eip155:5:${account}`,
         spam: true,
         env: "staging",
       });
