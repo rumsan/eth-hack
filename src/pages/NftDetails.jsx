@@ -22,7 +22,7 @@ import { getNetworkConnectParams } from "../utils";
 
 const NftDetails = () => {
   const { id, chainId: networkId } = useParams();
-  const { chainId, account } = useWeb3React();
+  const { chainId } = useWeb3React();
   const { fetchNftMetadata } = useContext(CovalentContext);
   const [isFetched, setIsFetched] = useState(false);
   const [detail, setDetail] = useState(null);
@@ -69,7 +69,7 @@ const NftDetails = () => {
         nft.data.items[0].nft_data[0].external_data.external_url
       );
       const nftData = nft.data.items[0];
-      const data = await marketPlace.methods.tokenDetails(0).call();
+      const data = await marketPlace.methods.tokenDetails(id).call();
       const price = Web3.utils.fromWei(data.minPrice);
       const previousOwner = data.nftOwner;
 

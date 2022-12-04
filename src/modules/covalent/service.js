@@ -33,7 +33,9 @@ export async function fetchNftTokenIds(params) {
               contract,
               tokenId: d.token_id,
             });
-            const data = await marketPlace.methods.tokenDetails(0).call();
+            const data = await marketPlace.methods
+              .tokenDetails(d.token_id)
+              .call();
             const price = Web3.utils.fromWei(data.minPrice);
             const previousOwner = data.nftOwner;
             const metadata = metadataInfo.data.items[0].nft_data[0];
