@@ -7,7 +7,6 @@ import API from "../constants/api";
 import { CovalentContext } from "../modules/covalent/context";
 import { getContract } from "../utils/web3";
 
-
 import { fetchTokenUri } from "../modules/ipfs/service";
 
 import "../styles/nft-details.css";
@@ -19,21 +18,26 @@ import marketPlaceAbi from "../contract/abi/MarketPlace.json";
 import Web3 from "web3";
 import { NftContext } from "../modules/nft/context";
 
-
 const NftDetails = () => {
-  const { id ,chainId} = useParams();
+  const { id, chainId } = useParams();
   const { fetchNftMetadata } = useContext(CovalentContext);
   const [isFetched, setIsFetched] = useState(false);
   const [detail, setDetail] = useState(null);
 
-  const marketPlace = getContract(marketPlaceAbi.abi,CONTRACT_ADDRESS.marketPlace[chainId],chainId);
-  const{buyNft} = useContext(NftContext);
+  const marketPlace = getContract(
+    marketPlaceAbi.abi,
+    CONTRACT_ADDRESS.marketPlace[chainId],
+    chainId
+  );
+  const { buyNft } = useContext(NftContext);
 
-  const  handleBuy = async() => {
-    await buyNft({tokenId:id,price:detail?.price,previousOwner:detail?.previousOwner});
-
+  const handleBuy = async () => {
+    await buyNft({
+      tokenId: id,
+      price: detail?.price,
+      previousOwner: detail?.previousOwner,
+    });
   };
-
 
   useEffect(() => {
     async function fetchNftDetail() {
@@ -51,7 +55,7 @@ const NftDetails = () => {
       const price = Web3.utils.fromWei(data.minPrice);
       const previousOwner = data.nftOwner;
 
-      setDetail({ ...nftData, ...ipfsInfo ,price,previousOwner});
+      setDetail({ ...nftData, ...ipfsInfo, price, previousOwner });
       setIsFetched(true);
     }
     fetchNftDetail();
@@ -92,7 +96,7 @@ const NftDetails = () => {
                       {/* <i className="ri-send-plane-line"></i> */}
                     </span>
                     {/* <span> */}
-                      {/* <i className="ri-more-2-line"></i> */}
+                    {/* <i className="ri-more-2-line"></i> */}
                     {/* </span> */}
                   </div>
                 </div>
@@ -109,10 +113,11 @@ const NftDetails = () => {
                 </div>
 
                 <p className="my-4">{detail?.description}</p>
-                <button className="singleNft-btn d-flex align-items-center gap-2 w-100" 
-                onClick={handleBuy}
+                <button
+                  className="singleNft-btn d-flex align-items-center gap-2 w-100"
+                  onClick={handleBuy}
                 >
-                  <i className="ri-shopping-cart-line"></i> Bjuy Now
+                  <i className="ri-shopping-cart-line text-white"></i> Buy Now
                   {/* <Link to="/wallet">Add to cart</Link> */}
                 </button>
               </div>

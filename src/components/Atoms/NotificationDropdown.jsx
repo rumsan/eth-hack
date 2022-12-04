@@ -33,7 +33,13 @@ function NotificationDropdown({ direction, notifications, msgs, ...args }) {
       <DropdownMenu {...args}>
         {notifications &&
           notifications.map((el, index) => (
-            <DropdownItem key={index}>{el?.message}</DropdownItem>
+            <DropdownItem
+              key={index}
+              className="notification justify-content-center "
+            >
+              <i className="ri-information-fill" style={{ fontSize: 16 }}></i>{" "}
+              <span style={{ marginTop: 20 }}>{el?.message}</span>
+            </DropdownItem>
           ))}
       </DropdownMenu>
     </Dropdown>

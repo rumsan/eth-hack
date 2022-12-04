@@ -129,14 +129,15 @@ const Header = () => {
                   direction="down"
                 />
               )}
+              {account && (
+                <NotificationDropdown
+                  direction="down"
+                  notifications={notification}
+                  // msgs={getNotifications()}
+                />
+              )}
             </button>
-            {account && (
-              <NotificationDropdown
-                direction="down"
-                notifications={notification}
-                // msgs={getNotifications()}
-              />
-            )}
+
             <span className="mobile__menu">
               <i className="ri-menu-line" onClick={toggleMenu}></i>
             </span>
