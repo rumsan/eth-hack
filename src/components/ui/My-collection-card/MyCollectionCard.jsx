@@ -5,7 +5,7 @@ import "./my-collection-card.css";
 
 import defaultImg from "../../../assets/images/ava-04.png";
 import coverImage from "../../../assets/images/img-01.jpg";
-import MyToolTip from "../../Atoms/Tooltip"
+import MyToolTip from "../../Atoms/Tooltip";
 
 const MyCollectionCard = (props) => {
   const { isPreview } = props;
@@ -28,8 +28,6 @@ const MyCollectionCard = (props) => {
       }, 1000)
     );
   };
-
-  console.log(copied)
 
   return (
     <div className="single__nft__card">
@@ -60,7 +58,12 @@ const MyCollectionCard = (props) => {
           <div className="creator__info w-100 d-flex align-items-center justify-content-between">
             <div>
               <h6>Created By</h6>
-              <Link id="test" onClick={handleCopyToClipboard} className="text-white" style={{textDecoration:'none'}}> 
+              <Link
+                id="test"
+                onClick={handleCopyToClipboard}
+                className="text-white"
+                style={{ textDecoration: "none" }}
+              >
                 {creator.substring(0, 4) +
                   "..." +
                   creator.substring(creator.length, creator.length - 4)}
@@ -76,7 +79,7 @@ const MyCollectionCard = (props) => {
             </div>
           </div>
         </div>
-{/* 
+        {/* 
         <div className=" mt-3 d-flex align-items-center justify-content-between">
           <button
             disabled={isPreview === true}
